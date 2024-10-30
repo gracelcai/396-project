@@ -15,7 +15,7 @@ if 'Adj Close' in stock_data.columns:
     adjusted_close_data.rename(columns={'Adj Close': 'Adjusted Closing Price'}, inplace=True)
 elif 'Close' in stock_data.columns:
     adjusted_close_data = stock_data[['Close']]
-    adjusted_close_data.rename(columns={'Close': 'Adjusted Closing Price'}, inplace=True)
+    adjusted_close_data.rename(columns={'Close': 'Closing Price'}, inplace=True)
 else:
     print("No suitable columns found for adjusted or regular closing prices.")
     adjusted_close_data = None
