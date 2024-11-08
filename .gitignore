@@ -162,3 +162,4 @@ cython_debug/
 #.idea/
 
 396h/
+test_trainer/
