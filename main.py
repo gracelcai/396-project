@@ -1,36 +1,41 @@
-import numpy as np
-import evaluate
+import json
+import datetime
+from csv import writer
+from tweet_scraper import scrape
+from news_scaper import scrape_news
+from data_cleaning import clean_data
+from vader import vader_analyze
+from historical import get_stock_data
 
-from transformers import AutoModelForSequenceClassification, AutoTokenizer, TrainingArguments, Trainer
-from datasets import load_dataset
- 
-def compute_metrics(eval_pred):
-    logits, labels = eval_pred
-    predictions = np.argmax(logits, axis=-1)
-    return metric.compute(predictions=predictions, references=labels)
+f = open('scraper_config.json')
+config = json.load(f)
+symbol = config['symbols'][0][1:]
 
-def tokenize_function(examples):
-    return tokenizer(examples["text"], padding="max_length", truncation=True)
+tweet_csv = open('results.csv', 'a')
+writer_object = writer(tweet_csv)
 
-dataset = load_dataset("zeroshot/twitter-financial-news-sentiment")
-tokenizer = AutoTokenizer.from_pretrained("ahmedrachid/FinancialBERT-Sentiment-Analysis")
-tokenized_datasets = dataset.map(tokenize_function, batched=True)
+try:
+    scrape()
+except:
+    print("Tweet rate limit exceeded. Please try again later.")
+clean_data()
 
-small_train_dataset = tokenized_datasets["train"].shuffle(seed=42).select(range(3000))
-small_eval_dataset = tokenized_datasets["validation"].shuffle(seed=42).select(range(300))
+try:
+    pass
+    # scrape news
+except:
+    print("News rate limit exceeded. Please try again later.")
+# clean news data
 
-model = AutoModelForSequenceClassification.from_pretrained("ahmedrachid/FinancialBERT-Sentiment-Analysis", num_labels=3)
+vader_score = vader_analyze()
+print("\nToday's score:", vader_score)
 
-metric = evaluate.load("accuracy")
+bert_score = # call bert function
+# print bert score or however its formatted
 
-training_args = TrainingArguments(output_dir="test_trainer", eval_strategy="epoch", learning_rate=2e-5, per_device_train_batch_size=16, per_device_eval_batch_size=16, num_train_epochs=10, weight_decay=0.01)
+prices = get_stock_data()
+print(f"\nToday's opening price for {symbol}: {prices['today_open']}")
 
-trainer = Trainer(
-    model=model,
-    args=training_args,
-    train_dataset=small_train_dataset,
-    eval_dataset=small_eval_dataset,
-    compute_metrics=compute_metrics,
-)
-
-trainer.train()
+# replace underscore with bert score and other bert data, will need to modify results.csv for right column names
+writer_object.writerow([datetime.date.today(), symbol, vader_score, _______, 'NA', prices['yesterday_close'], prices['today_open']])
+print("\nData saved to results.csv")
