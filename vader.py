@@ -1,8 +1,10 @@
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import pandas as pd
 
+
 def vader_analyze():
     df = pd.read_csv('tweets.csv')
+    df = df[df[df['time'] >= cutoff_date]['time'].dt.date != datetime.now().date()]
 
     analyzer = SentimentIntensityAnalyzer()
     sum = 0
