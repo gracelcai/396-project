@@ -9,7 +9,7 @@ def compute_metrics(eval_pred):
     predictions = np.argmax(logits, axis=-1)
     return metric.compute(predictions=predictions, references=labels)
 
-def tokenize_function(examples):
+def tokenize_function(examples): 
     return tokenizer(examples["text"], padding="max_length", truncation=True)
 
 dataset = load_dataset("zeroshot/twitter-financial-news-sentiment")
