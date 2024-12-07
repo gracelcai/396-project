@@ -14,7 +14,13 @@ async def main():
         auth_info_2=EMAIL,
         password=PASSWORD
     )
-    
-    print(await client.get_trends('trending'))
+    tweets = await client.search_tweet('python', 'Latest')
+
+    for tweet in tweets:
+        print(
+            tweet.user.name,
+            tweet.text,
+            tweet.created_at
+        )
 
 asyncio.run(main())
