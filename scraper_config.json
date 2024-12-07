@@ -1,0 +1,4 @@
+{
+    "symbols" : ["$META"],
+    "lookback_window": 13
+}
