@@ -1,28 +1,30 @@
 import yfinance as yf
 import pandas as pd
+import json
+from datetime import datetime, timedelta
 
-ticker_symbol = 'TSLA'
-start_date = '2022-08-01'
-end_date = '2022-12-31'
+f = open('scraper_config.json')
+config = json.load(f)
+ticker_symbol = config['symbols'][0][1:]
+lookback_window = config['lookback_window']
+
+end_date = datetime.today().strftime('%Y-%m-%d')  # Today's date
+start_date = (datetime.today() - timedelta(days=lookback_window)).strftime('%Y-%m-%d')
 
 ticker_data = yf.Ticker(ticker_symbol)
 stock_data = ticker_data.history(start=start_date, end=end_date)
 
-print("Available columns:", stock_data.columns)
+output_data = pd.DataFrame()
 
 if 'Adj Close' in stock_data.columns:
-    adjusted_close_data = stock_data[['Adj Close']]
-    adjusted_close_data.rename(columns={'Adj Close': 'Adjusted Closing Price'}, inplace=True)
+    output_data['Adjusted Closing Price'] = stock_data['Adj Close']
 elif 'Close' in stock_data.columns:
-    adjusted_close_data = stock_data[['Close']]
-    adjusted_close_data.rename(columns={'Close': 'Closing Price'}, inplace=True)
-else:
-    print("No suitable columns found for adjusted or regular closing prices.")
-    adjusted_close_data = None
+    output_data['Closing Price'] = stock_data['Close']
 
-if adjusted_close_data is not None:
-    csv_filename = 'TSLA_adjusted_close_aug_dec_2022.csv'
-    adjusted_close_data.to_csv(csv_filename, index=True)
+if 'Open' in stock_data.columns:
+    output_data['Opening Price'] = stock_data['Open']
+
+if not output_data.empty:
+    csv_filename = f"{ticker_symbol}.csv"
+    output_data.to_csv(csv_filename, index=True)
     print(f"Data saved to {csv_filename}")
-else:
-    print("Data could not be saved due to missing closing price columns.")
