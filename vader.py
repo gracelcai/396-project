@@ -18,5 +18,3 @@ def vader_analyze():
         i += 1
 
     return(sum/len(df))
-
-print(vader_analyze())

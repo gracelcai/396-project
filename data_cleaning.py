@@ -19,7 +19,5 @@ def clean_data():
 
     df.to_csv('tweets.csv', index=False)
 
-    print("Data cleaning complete")
+    print("\nData cleaning complete")
     print("Number of usable tweets:", len(df))
-    
-clean_data()
