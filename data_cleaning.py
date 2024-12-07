@@ -17,7 +17,7 @@ def clean_data():
     df["time"] = pd.to_datetime(df["time"])
     df = df[df['time'] >= cutoff_date]
 
-    df.to_csv('tweets.csv')
+    df.to_csv('tweets.csv', index=False)
 
     print("Data cleaning complete")
     print("Number of usable tweets:", len(df))
