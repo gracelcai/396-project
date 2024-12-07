@@ -6,3 +6,11 @@ python-dotenv==1.0.1
 requests==2.32.3
 sgmllib3k==1.0.0
 urllib3==2.2.3
+json
+asyncio
+csv
+twikit
+pandas
+datetime
+numpy
+evaluate
