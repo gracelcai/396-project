@@ -21,3 +21,5 @@ def clean_data():
 
     print("Data cleaning complete")
     print("Number of usable tweets:", len(df))
+    
+clean_data()

@@ -23,21 +23,23 @@ async def main():
         password=PASSWORD
     )
     
-    for _ in range (10):
-        for symbol in config['symbols']:
-            print(f"\nGetting data for {symbol}...")
-            data = await client.search_tweet(query=symbol, product='Media', count=20)
-            for tweet in data:
-                tweet_data = []
-                tweet_data.append(tweet.id)
-                tweet_data.append(tweet.user.verified)
-                tweet_data.append(tweet.created_at_datetime)
-                tweet_data.append(tweet.lang)
-                tweet_data.append(tweet.favorite_count)
-                tweet_data.append(tweet.retweet_count)
-                tweet_data.append(tweet.view_count)
-                tweet_data.append(tweet.text)
-                
-                writer_object.writerow(tweet_data)
+    products = ['Top', 'Latest', 'Media']
+    for product in products:
+        for _ in range (10):
+            for symbol in config['symbols']:
+                print(f"Getting data for {symbol} with {product} label...")
+                data = await client.search_tweet(query=symbol, product=product, count=20)
+                for tweet in data:
+                    tweet_data = []
+                    tweet_data.append(tweet.id)
+                    tweet_data.append(tweet.user.verified)
+                    tweet_data.append(tweet.created_at_datetime)
+                    tweet_data.append(tweet.lang)
+                    tweet_data.append(tweet.favorite_count)
+                    tweet_data.append(tweet.retweet_count)
+                    tweet_data.append(tweet.view_count)
+                    tweet_data.append(tweet.text)
+                    
+                    writer_object.writerow(tweet_data)
                             
 asyncio.run(main())

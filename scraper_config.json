@@ -1,4 +1,4 @@
 {
-    "symbols" : ["$META"],
+    "symbols" : ["$NVDA"],
     "lookback_window": 13
 }
