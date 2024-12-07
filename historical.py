@@ -4,7 +4,7 @@ import json
 from datetime import datetime, timedelta
 
 def get_stock_data():
-    with open('396-project/scraper_config.json') as f:
+    with open('scraper_config.json') as f:
         config = json.load(f)
     ticker_symbol = config['symbols'][0][1:]
     
