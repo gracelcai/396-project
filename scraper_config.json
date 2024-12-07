@@ -1,4 +1,4 @@
 {
     "symbols" : ["$NVDA"],
-    "lookback_window": 13
+    "lookback_window": 14
 }

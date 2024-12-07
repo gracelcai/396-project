@@ -15,7 +15,9 @@ def clean_data():
     cutoff_date = datetime.now() - timedelta(days=lookback)
     df['time'] = df['time'].apply(lambda x: x[:-6])
     df["time"] = pd.to_datetime(df["time"], format="ISO8601", utc=False)
-    df = df[df['time'] >= cutoff_date]
+    
+    # make it so that i don't get current day tweets
+    df = df[df[df['time'] >= cutoff_date]['time'].dt.date != datetime.now().date()]
 
     df.to_csv('tweets.csv', index=False)
 
