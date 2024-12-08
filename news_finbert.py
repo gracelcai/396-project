@@ -13,7 +13,7 @@ nltk.download('punkt')
 
 # Use a pipeline as a high-level helper
 from transformers import pipeline
-from news_scaper import *
+from news_scraper import *
 
 def news_results(symbol):
     pipe = pipeline("text-classification", model="ProsusAI/finbert")
