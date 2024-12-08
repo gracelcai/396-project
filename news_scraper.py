@@ -3,6 +3,8 @@ import os
 import csv
 import argparse
 from dotenv import load_dotenv
+from datetime import date, timedelta
+
 
 # load_dotenv()
 # parser=argparse.ArgumentParser()
@@ -52,6 +54,8 @@ from dotenv import load_dotenv
 # print(newsapi.get_sources())
 
 def get_news(symbol):
+    today = date.today()
+    week_ago = today - timedelta(days=7)
     load_dotenv()
     api_key = os.environ.get("NEWS_API_KEY")
     newsapi = NewsApiClient(api_key=api_key)  # Get an API key from https://newsapi.org/
@@ -69,6 +73,6 @@ def get_news(symbol):
                                     #   searchIn='title',
                                     sources=",".join(sources), 
                                     language="en", 
-                                    from_param='2024-11-07',
+                                    from_param=str(week_ago),
                                     page_size=100)
     return articles
