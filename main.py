@@ -20,22 +20,22 @@ except:
     print("Tweet rate limit exceeded. Please try again later.")
 clean_data()
 
-try:
-    pass
-    # scrape news
-except:
-    print("News rate limit exceeded. Please try again later.")
-# clean news data
+# try:
+#     pass
+#     # scrape news
+# except:
+#     print("News rate limit exceeded. Please try again later.")
+# # clean news data
 
 vader_score = vader_analyze()
 print("\nToday's score:", vader_score)
 
-bert_score = # call bert function
-# print bert score or however its formatted
+# bert_score = # call bert function
+# # print bert score or however its formatted
 
 prices = get_stock_data()
 print(f"\nToday's opening price for {symbol}: {prices['today_open']}")
 
 # replace underscore with bert score and other bert data, will need to modify results.csv for right column names
-writer_object.writerow([datetime.date.today(), symbol, vader_score, _______, 'NA', prices['yesterday_close'], prices['today_open']])
+writer_object.writerow([datetime.date.today(), symbol, vader_score, 'NA', prices['yesterday_close'], prices['today_open']])
 print("\nData saved to results.csv")

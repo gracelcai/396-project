@@ -1,14 +1,19 @@
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import pandas as pd
+import json
+from datetime import datetime, timedelta
 
 f = open('scraper_config.json')
 config = json.load(f)
 
 def vader_analyze():
-    
     df = pd.read_csv('tweets.csv')
+    
     lookback = config['lookback_window']
     cutoff_date = datetime.now() - timedelta(days=lookback)
+    
+    df["time"] = pd.to_datetime(df["time"], format="ISO8601", utc=False)
+    
     df = df[df[df['time'] >= cutoff_date]['time'].dt.date != datetime.now().date()]
 
     analyzer = SentimentIntensityAnalyzer()
