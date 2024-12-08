@@ -6,7 +6,7 @@ def clean_data():
 
     df = df[df['lang'] == 'en']
 
-    df['time'] = df['time'].apply(lambda x: x[:-6])
+    df['time'] = df['time'].apply(lambda x: x[:19])
     df["time"] = pd.to_datetime(df["time"], format="ISO8601", utc=False)
     
     df.to_csv('tweets.csv', index=False)
