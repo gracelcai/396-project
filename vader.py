@@ -16,7 +16,7 @@ def vader_analyze():
     
     # df = df[df[df['time'] >= cutoff_date]['time'].dt.date != datetime.now().date()]
     df = df[df['time'] >= cutoff_date]
-    df = df[df['time'].dt.date != datetime.now().date()]
+    df = df[df['time'].dt.date != (datetime.now().date())]
 
     analyzer = SentimentIntensityAnalyzer()
     sum = 0
@@ -24,7 +24,12 @@ def vader_analyze():
     for sentence in df['text']:
         vs = analyzer.polarity_scores(sentence)
         scores = vs['compound'] * (df['retweets'].iloc[i] + 1)
+        if scores < 0:
+            scores *=10
+            # print(sentence)
+            # print(scores)
         #print("{} {} {}".format(scores, vs['compound'], df['retweets'][i]))
+        
         if (vs['compound'] > -.5 and vs['compound'] < .5):
             continue
         else:
