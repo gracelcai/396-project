@@ -53,9 +53,8 @@ from datetime import date, timedelta
 
 # print(newsapi.get_sources())
 
-def get_news(symbol):
-    today = date.today()
-    week_ago = today - timedelta(days=7)
+def get_news(symbol, lookback, date):
+    week_ago = date - timedelta(days=lookback)
     load_dotenv()
     api_key = os.environ.get("NEWS_API_KEY")
     newsapi = NewsApiClient(api_key=api_key)  # Get an API key from https://newsapi.org/
@@ -74,5 +73,6 @@ def get_news(symbol):
                                     sources=",".join(sources), 
                                     language="en", 
                                     from_param=str(week_ago),
+                                    # to_param=str(today),
                                     page_size=100)
     return articles
