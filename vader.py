@@ -25,7 +25,7 @@ def vader_analyze():
         vs = analyzer.polarity_scores(sentence)
         scores = vs['compound'] * (df['retweets'].iloc[i] + 1)
         if scores < 0:
-            scores *=10
+            scores *= 10
             # print(sentence)
             # print(scores)
         #print("{} {} {}".format(scores, vs['compound'], df['retweets'][i]))

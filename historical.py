@@ -26,7 +26,7 @@ def get_stock_data():
         "yesterday_close": yesterday_close
     }
 
-
+# print(get_stock_data())
 
 # output_data = pd.DataFrame()
 
