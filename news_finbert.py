@@ -25,8 +25,9 @@ def news_results(symbol):
     
     for article in articles['articles']:
         date = datetime.strptime(article['publishedAt'], "%Y-%m-%dT%H:%M:%SZ").date()
-        if date < today:
-            text = article['title']
+        text = article['title']
+        
+        if date < today and symbol in text.lower():
             # text = article['description']
             pred = pipe(text)[0]
             label = pred['label']
