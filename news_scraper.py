@@ -73,6 +73,6 @@ def get_news(symbol, lookback, date):
                                     sources=",".join(sources), 
                                     language="en", 
                                     from_param=str(week_ago),
-                                    # to_param=str(today),
+                                    to=str(date),
                                     page_size=100)
     return articles
