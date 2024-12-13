@@ -21,7 +21,6 @@ def vader_analyze():
     analyzer = SentimentIntensityAnalyzer()
     sum = 0
     i = 0
-    divide = 0
     for sentence in df['text']:
         vs = analyzer.polarity_scores(sentence)
         scores = vs['compound'] * (df['retweets'].iloc[i] + 1)
@@ -35,7 +34,6 @@ def vader_analyze():
             continue
         else:
             sum += scores
-            divide += 1
         i += 1
 
-    return(sum/divide)
+    return(sum/len(df))
