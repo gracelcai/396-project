@@ -41,5 +41,3 @@ def news_results(symbol):
             elif label == 'negative':
                 total_score -= score
     return total_score
-
-print('score:', news_results('nvidia'))
